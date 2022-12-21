@@ -1,0 +1,690 @@
+{
+	"tables": {
+		"3797dd07-ee20-4973-b54b-ff8472b4073c": {
+			"id": "3797dd07-ee20-4973-b54b-ff8472b4073c",
+			"visible": true,
+			"name": "main",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "176cb338-6d85-4793-b8ae-9d29c7e41167",
+					"name": "id_especie",
+					"datatype": "INTEGER",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "567a32ee-20e4-4410-81c3-622dc2c50478",
+					"name": "nome_especie",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "1200507e-75c6-431c-9526-023b803a1883",
+					"name": "arquivo",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "8a76aa5c-d1e4-4a42-82f2-644902fef66b",
+					"name": "caminho_absoluto",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "bf133fee-cabe-42e6-be2e-a1face630460",
+					"name": "caminho_relativo",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "a08cfbc0-12f4-4f32-a5f5-752abd9c1150",
+					"name": "familia_nome",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "82255844-39a8-4916-b09d-1299a7c1c3ea",
+					"name": "sub_familia_nome",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				}
+			],
+			"relations": [
+				"4411082d-ee32-4d7d-9bb1-dbbd31be795f"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "699c1b22-0404-4bb6-ab04-fa69afab4165",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "5195eccd-6bdf-4d98-bca7-fe6d3ad77689",
+							"colid": "176cb338-6d85-4793-b8ae-9d29c7e41167"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"collation": "",
+			"objectType": "table",
+			"sqlite": {
+				"withoutrowid": false
+			}
+		},
+		"ac72ed9a-1655-454f-b25d-c7c0fe20bea9": {
+			"id": "ac72ed9a-1655-454f-b25d-c7c0fe20bea9",
+			"visible": true,
+			"name": "coleta",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "3e9582ba-9751-408a-8d3e-f4d5b67746fc",
+					"name": "id_coleta",
+					"datatype": "INTEGER",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "e52c4a21-1f55-44ba-93d7-6d5eb4993aac",
+					"name": "id_especie_referencia",
+					"datatype": "INTEGER",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					},
+					"fk": true,
+					"ref": "main"
+				},
+				{
+					"id": "4631aebe-49ae-4fa2-b461-3412b753c3c2",
+					"name": "inst_bar_code",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "e5be9a79-0930-4b09-97d0-73be5133bbc9",
+					"name": "genus",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "7bc4560f-a96b-409c-ad06-8a9fc58610f9",
+					"name": "species",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "c961ed5d-7ddd-430f-9788-bda49ebcccbb",
+					"name": "author",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "9b02504a-1e6b-4f51-883b-68595e004f1b",
+					"name": "sex",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "e9f92e82-1189-48ba-b525-d3f49cf4136e",
+					"name": "number_of_spec",
+					"datatype": "INTEGER",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "9b776dc0-0572-45e3-8c88-ed99c44a44f8",
+					"name": "museum_coll",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "33c76db1-0756-43c3-acf1-caf3fbf777b3",
+					"name": "country",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "51c89dc9-5015-4d46-acaf-d387999a6172",
+					"name": "province",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "834e63e3-055d-49cd-a54c-21974330ab4e",
+					"name": "locality",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "08bb6412-7533-4f20-b8a3-3bc75eb59efd",
+					"name": "date",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "734e391d-9a7e-41c9-94a4-3fed2f26743f",
+					"name": "collector",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "6a862f79-0f49-410d-a8c3-922c594f03ea",
+					"name": "type",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "5d0aa0c1-d06a-4883-b649-47b711918deb",
+					"name": "accession",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "06e43feb-cdfe-46e7-b303-c947a9138741",
+					"name": "lat",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "aa0f472d-1bef-48a7-b19a-e3348fb3af99",
+					"name": "lat1",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "eb63e39f-c8ec-404b-a3e3-98e9f203613e",
+					"name": "lat2",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "0e978a6a-aed1-4550-95dc-050322b5cf1f",
+					"name": "lat_hem",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "8dbedfb6-012e-48f8-a7ae-d96e21072e31",
+					"name": "long",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "3cae6751-e661-4d89-8505-72114dc2b641",
+					"name": "long1",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "d6b550bd-8c22-4e74-b7fe-d97b24779dda",
+					"name": "long2",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				},
+				{
+					"id": "31a493f8-3e4d-433a-bf1b-a6de0768f7d6",
+					"name": "long_hem",
+					"datatype": "TEXT",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"collation": "",
+					"after": "",
+					"sqlite": {
+						"autoincrement": false
+					}
+				}
+			],
+			"relations": [
+				"4411082d-ee32-4d7d-9bb1-dbbd31be795f"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "8c17cf6e-2ee2-4cda-8301-79085921c795",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "fc08d7d1-1376-472a-9db4-fbc89c394300",
+							"colid": "3e9582ba-9751-408a-8d3e-f4d5b67746fc"
+						}
+					]
+				}
+			],
+			"indexes": [],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"collation": "",
+			"objectType": "table",
+			"sqlite": {
+				"withoutrowid": false
+			}
+		}
+	},
+	"relations": {
+		"4411082d-ee32-4d7d-9bb1-dbbd31be795f": {
+			"id": "4411082d-ee32-4d7d-9bb1-dbbd31be795f",
+			"visible": true,
+			"name": "main_table1",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "699c1b22-0404-4bb6-ab04-fa69afab4165",
+			"parent": "3797dd07-ee20-4973-b54b-ff8472b4073c",
+			"child": "ac72ed9a-1655-454f-b25d-c7c0fe20bea9",
+			"c_mp": "false",
+			"c_mch": "true",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "9835f3c5-343d-45d7-96b1-332d3633afad",
+					"parentcol": "176cb338-6d85-4793-b8ae-9d29c7e41167",
+					"childcol": "e52c4a21-1f55-44ba-93d7-6d5eb4993aac"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		}
+	},
+	"notes": {},
+	"lines": {},
+	"model": {
+		"name": "fischerdb",
+		"id": "b2831db3-fb40-4ded-96b6-3c525743f3d2",
+		"activeDiagram": "f741ddce-0696-4d93-b026-14c7c3876f81",
+		"desc": "",
+		"path": "",
+		"type": "SQLITE",
+		"version": 1,
+		"parentTableInFkCols": true,
+		"caseConvention": "under",
+		"replaceSpace": "_",
+		"color": "transparent",
+		"sideSelections": true,
+		"isDirty": true,
+		"storedin": {
+			"major": 4,
+			"minor": 6,
+			"extra": 5
+		},
+		"embeddedInParentsIsDisplayed": true,
+		"schemaContainerIsDisplayed": false,
+		"cardinalityIsDisplayed": false,
+		"estimatedSizeIsDisplayed": false,
+		"writeFileParam": false,
+		"def_collation": "",
+		"def_coltopk": true,
+		"sqlSettings": {
+			"wrapLines": true,
+			"wrapOffset": 80,
+			"indent": true,
+			"indentationString": "spaces",
+			"indentationSize": 2,
+			"limitItemsOnLine": true,
+			"maxListItemsOnLine": 3,
+			"statementDelimiter": ";",
+			"routineDelimiter": ";",
+			"keywordCase": "upper",
+			"identiferCase": "original",
+			"includeSchema": "always",
+			"quotation": "if_needed"
+		},
+		"lastSaved": "11/10/2022"
+	},
+	"otherObjects": {},
+	"diagrams": {
+		"f741ddce-0696-4d93-b026-14c7c3876f81": {
+			"name": "Main Diagram",
+			"description": "",
+			"id": "f741ddce-0696-4d93-b026-14c7c3876f81",
+			"keysgraphics": true,
+			"linegraphics": "detailed",
+			"zoom": 1,
+			"background": "transparent",
+			"lineColor": "transparent",
+			"isOpen": true,
+			"main": true,
+			"diagramItems": {
+				"3797dd07-ee20-4973-b54b-ff8472b4073c": {
+					"referencedItemId": "3797dd07-ee20-4973-b54b-ff8472b4073c",
+					"x": 506,
+					"y": 307,
+					"gHeight": 153,
+					"gWidth": 232,
+					"color": "#ffffff",
+					"background": "#9c27b0",
+					"resized": false,
+					"autoExpand": true
+				},
+				"ac72ed9a-1655-454f-b25d-c7c0fe20bea9": {
+					"referencedItemId": "ac72ed9a-1655-454f-b25d-c7c0fe20bea9",
+					"x": 97,
+					"y": 109,
+					"gHeight": 459,
+					"gWidth": 269,
+					"color": "#ffffff",
+					"background": "#2196f3",
+					"resized": false,
+					"autoExpand": true
+				}
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"type": "erd"
+		}
+	},
+	"order": [
+		"3797dd07-ee20-4973-b54b-ff8472b4073c",
+		"ac72ed9a-1655-454f-b25d-c7c0fe20bea9",
+		"4411082d-ee32-4d7d-9bb1-dbbd31be795f"
+	],
+	"collapsedTreeItems": []
+}
