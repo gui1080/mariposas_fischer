@@ -4,6 +4,9 @@ import sqlite3
 import os
 import time 
 import pandas as pd
+import random
+
+from relaciona_coleta import relaciona_coleta
 
 # -----------------------------------------------
 
@@ -12,16 +15,18 @@ def main():
     # declarando queries
     #-------------------------------------------------------
 
+    #[identificador, nome, string_arquivo, caminho_absoluto, caminho_relativo, familia_nome, sub_familia_nome]
+
     cria_tabela_main = '''CREATE TABLE IF NOT EXISTS main (
-        id_especie INTEGER PRIMARY KEY AUTOINCREMENT, 
-        nome_especie VARCHAR(255), 
-        descricao TEXT, 
-        imagem_principal VARCHAR(255),  
-        imagem_sec VARCHAR(255))'''
+        identificador INTEGER PRIMARY KEY AUTOINCREMENT, 
+        nome VARCHAR(255), 
+        string_arquivo VARCHAR(255),
+        caminho_absoluto VARCHAR(255),
+        caminho_relativo VARCHAR(255),
+        familia_nome VARCHAR(255),  
+        sub_familia_nome VARCHAR(255))'''
 
     cria_tabela_coleta = '''CREATE TABLE IF NOT EXISTS coleta (
-        id_coleta INTEGER PRIMARY KEY AUTOINCREMENT,
-        id_especie_referencia INTEGER, 
         inst_bar_code VARCHAR(255),
         genus VARCHAR(255),
         species VARCHAR(255),
@@ -43,11 +48,12 @@ def main():
         long VARCHAR(5),
         long1 VARCHAR(5),
         long2 VARCHAR(5),
-        long_hem VARCHAR(5))'''
+        long_hem VARCHAR(5),
+        id_coleta INTEGER PRIMARY KEY AUTOINCREMENT,)'''
 
     insert_teste1 = '''INSERT INTO main VALUES (NULL, 'Acharia sp. 3', 'descrição aqui', 'sla1', 'sla2')'''
 
-    insert_teste2 = '''INSERT INTO coleta (id_coleta, id_especie_referencia, inst_bar_code) VALUES (NULL, '1', 'USNM 00167178')'''
+    insert_teste2 = '''INSERT INTO coleta (id_coleta, inst_bar_code) VALUES (NULL, 'USNM 00167178')'''
 
 
     # acesso de BD
@@ -92,8 +98,24 @@ def main():
     # [identificador, nome, string de arquivo, caminho_absoluto, caminho_relativo, familia_nome, sub_familia_nome]
 
     # exporta para dataframe
+    df_imagens = pd.DataFrame(imagens_para_import, columns = ["id", "nome", "string_arquivo", "caminho_absoluto", "caminho_relativo", "familia_nome", "sub_familia_nome"])
 
     # salva no BD
+    try:
+        conn = sqlite3.connect(os.path.dirname(__file__) + FISCHER_BD)
+        c = conn.cursor()
+
+        df_imagens.to_sql('main', conn, if_exists='replace', index=False)
+
+        conn.commit()
+        time.sleep(1)
+    
+    except:
+        print("Erro!")
+        quit()
+
+    finally:
+        conn.close()
 
     # Dados de coleta (.xlsx)
     # -----------------------------------------------
@@ -114,6 +136,8 @@ def main():
                                         keep_default_na=True
                                         )
             
+            dados_excel["Inst. Bar Code"] = dados_excel["Inst. Bar Code"].astype(str)
+
             if MOSTRAR_PRINTS == 1:
                 print(dados_excel.head())
                 print("Mostrando colunas da planilha!")
@@ -122,9 +146,66 @@ def main():
                     print(col)
                 print("-----------\n\n")
 
+            ids_coleta = []
+
+            for row, index in dados_excel.iterrows():
+                
+                ids_coleta.append("NULL")
+
+            dados_excel["id_coleta"] = ids_coleta
+
             # renomeia colunas
+            dados_excel.rename(
+                            {'Inst. Bar Code':'inst_bar_code',
+                            'Genus':'genus',
+                            'Species':'species',
+                            'Author':'author',
+                            'Sex':'sex',
+                            'number of spec':'number_of_spec',
+                            'Museum/Coll':'museum_coll',
+                            'Country':'country',
+                            'Province':'province',
+                            'Locality':'locality',
+                            'date':'date',
+                            'collector':'collector',
+                            'type #':'type',
+                            'accession #':'accession',
+                            'Lat. o':'lat',
+                            'Lat. 1':'lat1',
+                            'Lat. 2':'lat2',
+                            'Lat. Hem.':'lat_hem',
+                            'Long. o':'long',
+                            'Long. 1':'long1',
+                            'Long. 2':'long2',
+                            'Long. Hem.':'long_hem',
+                            'id_coleta':'id_coleta'}, axis='columns', inplace=True)
+
+            if MOSTRAR_PRINTS == 1:
+                print(dados_excel.head())
+                print("Mostrando colunas da planilha!")
+                print("\n\n-----------")
+                for col in dados_excel.columns:
+                    print(col)
+                print("-----------\n\n")
 
             # bota no BD
+            try:
+
+                conn = sqlite3.connect(os.path.dirname(__file__) + FISCHER_BD)
+                c = conn.cursor()
+
+                dados_excel.to_sql('coleta', conn, if_exists='append', index=False)
+
+                conn.commit()
+                time.sleep(1)
+            
+            except:
+                print("Erro botando coleta no BD!")
+                quit()
+
+            finally:
+                conn.close()
+
 
 
 
@@ -134,6 +215,7 @@ if __name__ == '__main__':
 
     inicio = time.time()
     main()
+    relaciona_coleta()
     fim = time.time()
 
     duracao = (fim - inicio) / 60

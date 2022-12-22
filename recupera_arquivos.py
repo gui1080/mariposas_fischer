@@ -26,6 +26,7 @@ def recupera_lista_arquivos():
 def recupera_lista_imagens():
 
     arquivos_para_import = []
+    arquivos_para_import.append(["id", "nome", "string_arquivo", "caminho_absoluto", "caminho_relativo", "familia_nome", "sub_familia_nome"])
 
     print("Iterando por arquivos para import")
 
@@ -39,8 +40,12 @@ def recupera_lista_imagens():
                 
                 # descricao da especie é tudo que vem depois de "fonte_dados_coleta_imagens"
                 
-                nome = re.search(r'^\w{1,} \w{1,}', arquivo)
-                nome = str(nome.group(0))
+                if re.match(r'^\w{1,} \w{1,}', arquivo):
+                    nome = re.search(r'^\w{1,} \w{1,}', arquivo)
+                    nome = str(nome.group(0))
+                else:
+                    nome = re.search(r'^\w{1,}', arquivo)
+                    nome = str(nome.group(0))
 
                 identificador = str(abs(hash(os.path.join(diretorio, arquivo))) % (10 ** 4)).zfill(4)
 
