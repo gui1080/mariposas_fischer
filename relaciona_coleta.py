@@ -4,6 +4,8 @@ import os
 import pandas as pd
 import time 
 
+#-------------------------------------------------------
+
 def relaciona_coleta(dados_Coleta, dados_Main, referencia_main):
 
     # "genus" nos dados de coleta, bater
@@ -48,6 +50,9 @@ def relaciona_coleta(dados_Coleta, dados_Main, referencia_main):
     print("Coleta relacionada!")
 
     return referencia_main
+
+#-------------------------------------------------------
+
 
 def relaciona_imagens(df_imagens, dados_Main, referencia_main_imagens):
 

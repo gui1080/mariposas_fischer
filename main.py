@@ -15,8 +15,6 @@ def main():
     # declarando queries
     #-------------------------------------------------------
 
-    #[identificador, nome, string_arquivo, caminho_absoluto, caminho_relativo, familia_nome, sub_familia_nome]
-
     cria_tabela_main = '''CREATE TABLE IF NOT EXISTS main (
         identificador INTEGER PRIMARY KEY, 
         nome VARCHAR(255)'''
@@ -233,10 +231,9 @@ def main():
         referencia_main_imagens.append("0000")
 
     referencia_main_imagens = relaciona_imagens(df_imagens, df_main, referencia_main_imagens)
-
-    df_imagens["identificador_referencia"] = referencia_main_imagens
-
+    
     # append list as column
+    df_imagens["identificador_referencia"] = referencia_main_imagens
 
     # -----------------------------------------------
 
