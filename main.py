@@ -6,7 +6,7 @@ import time
 import pandas as pd
 import random
 
-from relaciona_coleta import relaciona_coleta
+from relaciona_coleta import relaciona_coleta, relaciona_imagens
 
 # -----------------------------------------------
 
@@ -18,13 +18,18 @@ def main():
     #[identificador, nome, string_arquivo, caminho_absoluto, caminho_relativo, familia_nome, sub_familia_nome]
 
     cria_tabela_main = '''CREATE TABLE IF NOT EXISTS main (
-        identificador INTEGER PRIMARY KEY AUTOINCREMENT, 
+        identificador INTEGER PRIMARY KEY, 
+        nome VARCHAR(255)'''
+
+    cria_tabela_imagens = '''CREATE TABLE IF NOT EXISTS imagens (
+        identificador INTEGER PRIMARY KEY, 
         nome VARCHAR(255), 
         string_arquivo VARCHAR(255),
         caminho_absoluto VARCHAR(255),
         caminho_relativo VARCHAR(255),
         familia_nome VARCHAR(255),  
-        sub_familia_nome VARCHAR(255))'''
+        sub_familia_nome VARCHAR(255), 
+        identificador_referencia INTEGER)'''
 
     cria_tabela_coleta = '''CREATE TABLE IF NOT EXISTS coleta (
         inst_bar_code VARCHAR(255),
@@ -49,9 +54,10 @@ def main():
         long1 VARCHAR(5),
         long2 VARCHAR(5),
         long_hem VARCHAR(5),
-        id_coleta INTEGER PRIMARY KEY AUTOINCREMENT,)'''
+        id_coleta INTEGER PRIMARY KEY,
+        referencia_main INTEGER)'''
 
-    insert_teste1 = '''INSERT INTO main VALUES (NULL, 'Acharia sp. 3', 'descrição aqui', 'sla1', 'sla2')'''
+    insert_teste1 = '''INSERT INTO imagens VALUES (NULL, 'Acharia sp. 3', 'descrição aqui', 'sla1', 'sla2')'''
 
     insert_teste2 = '''INSERT INTO coleta (id_coleta, inst_bar_code) VALUES (NULL, 'USNM 00167178')'''
 
@@ -65,6 +71,11 @@ def main():
         c = conn.cursor()
 
         print("Cria tabela principal")
+        c.execute(cria_tabela_imagens)
+        conn.commit()
+        time.sleep(1)
+        
+        print("Cria tabela main")
         c.execute(cria_tabela_main)
         conn.commit()
         time.sleep(1)
@@ -98,24 +109,27 @@ def main():
     # [identificador, nome, string de arquivo, caminho_absoluto, caminho_relativo, familia_nome, sub_familia_nome]
 
     # exporta para dataframe
-    df_imagens = pd.DataFrame(imagens_para_import, columns = ["id", "nome", "string_arquivo", "caminho_absoluto", "caminho_relativo", "familia_nome", "sub_familia_nome"])
+    df_imagens = pd.DataFrame(imagens_para_import, columns = ["identificador", "nome", "string_arquivo", "caminho_absoluto", "caminho_relativo", "familia_nome", "sub_familia_nome"])
 
-    # salva no BD
-    try:
-        conn = sqlite3.connect(os.path.dirname(__file__) + FISCHER_BD)
-        c = conn.cursor()
+    # -----------------------------------------------
 
-        df_imagens.to_sql('main', conn, if_exists='replace', index=False)
+    identificador_main = []
+    nome_main = []
 
-        conn.commit()
-        time.sleep(1)
+    for index_imagens, row_imagens in df_imagens.iterrows():
+        
+        nome_imagem = str(row_imagens["nome"])
+        nome_main.append(nome_imagem)
     
-    except:
-        print("Erro!")
-        quit()
+    nome_main = list(set(nome_main))
+    
+    for nome in nome_main:
+        identificador_main.append(str(random.randint(111111,999999)))
 
-    finally:
-        conn.close()
+    df_main = pd.DataFrame({'nome': nome_main, 'identificador': identificador_main})
+    
+    print(df_main)
+    
 
     # Dados de coleta (.xlsx)
     # -----------------------------------------------
@@ -146,14 +160,6 @@ def main():
                     print(col)
                 print("-----------\n\n")
 
-            ids_coleta = []
-
-            for row, index in dados_excel.iterrows():
-                
-                ids_coleta.append("NULL")
-
-            dados_excel["id_coleta"] = ids_coleta
-
             # renomeia colunas
             dados_excel.rename(
                             {'Inst. Bar Code':'inst_bar_code',
@@ -177,8 +183,20 @@ def main():
                             'Long. o':'long',
                             'Long. 1':'long1',
                             'Long. 2':'long2',
-                            'Long. Hem.':'long_hem',
-                            'id_coleta':'id_coleta'}, axis='columns', inplace=True)
+                            'Long. Hem.':'long_hem'}, axis='columns', inplace=True)
+            
+            ids_coleta = []
+            referencia_main = []
+
+            for row, index in dados_excel.iterrows():
+                
+                ids_coleta.append(str(random.randint(111111,999999)))
+                referencia_main.append("0000")
+
+            referencia_main = relaciona_coleta(dados_excel, df_main, referencia_main)
+            
+            dados_excel["id_coleta"] = ids_coleta
+            dados_excel["referencia_main"] = referencia_main
 
             if MOSTRAR_PRINTS == 1:
                 print(dados_excel.head())
@@ -188,17 +206,17 @@ def main():
                     print(col)
                 print("-----------\n\n")
 
-            # bota no BD
+            # salvar dados_Coleta de volta no BD
             try:
 
                 conn = sqlite3.connect(os.path.dirname(__file__) + FISCHER_BD)
                 c = conn.cursor()
 
-                dados_excel.to_sql('coleta', conn, if_exists='append', index=False)
+                dados_excel.to_sql('coleta', conn, if_exists='replace', index=False)
 
                 conn.commit()
                 time.sleep(1)
-            
+                    
             except:
                 print("Erro botando coleta no BD!")
                 quit()
@@ -206,8 +224,44 @@ def main():
             finally:
                 conn.close()
 
+    # -----------------------------------------------
+    # Relaciona imagens com tabela main
+
+    referencia_main_imagens = []
+
+    for row, index in df_imagens.iterrows():
+        referencia_main_imagens.append("0000")
+
+    referencia_main_imagens = relaciona_imagens(df_imagens, df_main, referencia_main_imagens)
+
+    df_imagens["identificador_referencia"] = referencia_main_imagens
+
+    # append list as column
+
+    # -----------------------------------------------
+
+    # salva no BD
+    try:
+        conn = sqlite3.connect(os.path.dirname(__file__) + FISCHER_BD)
+        c = conn.cursor()
+
+        df_imagens.to_sql('imagens', conn, if_exists='replace', index=False)
+
+        conn.commit()
+        time.sleep(1)
 
 
+        df_main.to_sql('main', conn, if_exists='replace', index=False)
+
+        conn.commit()
+        time.sleep(1)
+    
+    except:
+        print("Erro!")
+        quit()
+
+    finally:
+        conn.close()
 
 # -----------------------------------------------
 
@@ -215,7 +269,6 @@ if __name__ == '__main__':
 
     inicio = time.time()
     main()
-    relaciona_coleta()
     fim = time.time()
 
     duracao = (fim - inicio) / 60
