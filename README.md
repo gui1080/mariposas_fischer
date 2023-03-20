@@ -2,6 +2,8 @@
 
 Resumindo: pegou-se tudo que o Fischer tinha catalogado por meio de imagens e arquivo de coleta, e se botou num Banco de Dados SQLite. A estrutura de pasta de imagens representa uma estrutura que descreve família/genero de uma dada espécie, e o arquivo ".xlsx" são as coletas do foco dos estudos, as "Acharias". 
 
+Contato do Fischer: https://www.inaturalist.org/people/gafischer
+
 ## Fonte de dados
 
 Esses dados são privados e pertencem ao Guilherme Fischer, mas a estrutura dos dados é descrita a baixo.
